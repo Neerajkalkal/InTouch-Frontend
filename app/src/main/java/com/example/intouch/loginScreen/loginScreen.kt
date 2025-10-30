@@ -14,12 +14,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.intouch.R
+import com.example.intouch.Viewmodes.AuthViewModel
 
 @Composable
-fun SignUpScreen(
-    onSignInClick: () -> Unit = {},
-    onSignUpClick: (String, Boolean) -> Unit = { _, _ -> }
+fun LoginScreen(
+            navController: NavController,
+            viewModel: AuthViewModel = viewModel()
 ) {
     var phoneNumber by remember { mutableStateOf("") }
     var rememberMe by remember { mutableStateOf(false) }
@@ -139,7 +142,10 @@ fun SignUpScreen(
 
                 // Sign Up Button
                 Button(
-                    onClick = { onSignUpClick(phoneNumber, rememberMe) },
+                    onClick = { viewModel.phoneNumber.value = phoneNumber
+                        viewModel.requestOtp {
+                            navController.navigate("otp/$phoneNumber")
+                        } },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(56.dp),
@@ -147,6 +153,10 @@ fun SignUpScreen(
                     shape = MaterialTheme.shapes.large
                 ) {
                     Text(text = "Sign Up", fontSize = 16.sp, color = Color.White)
+                }
+
+                viewModel.errorMessage.value?.let {
+                    Text(text = it, color = Color.Red, modifier = Modifier.padding(top = 8.dp))
                 }
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -162,7 +172,7 @@ fun SignUpScreen(
                         color = Color.White,
                         fontSize = 14.sp
                     )
-                    TextButton(onClick = onSignInClick) {
+                    TextButton(onClick = {}) {
                         Text(
                             text = "Sign in",
                             color = Color(0xFF1E90FF),
