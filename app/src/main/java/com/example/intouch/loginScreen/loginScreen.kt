@@ -25,7 +25,18 @@ fun LoginScreen(
             viewModel: AuthViewModel = viewModel()
 ) {
     var phoneNumber by remember { mutableStateOf("") }
-    var rememberMe by remember { mutableStateOf(false) }
+    val rememberMeState = viewModel.rememberMeState.collectAsState()
+    var rememberMe by remember { mutableStateOf(rememberMeState.value) }
+
+
+    LaunchedEffect(rememberMe) {
+        // 👇 If user chose remember me, skip login screen
+        if (rememberMe) {
+            navController.navigate("home") {
+                popUpTo("login") { inclusive = true }
+            }
+        }
+    }
 
     // Background
     Box(
@@ -125,7 +136,10 @@ fun LoginScreen(
                 ) {
                     Checkbox(
                         checked = rememberMe,
-                        onCheckedChange = { rememberMe = it },
+                        onCheckedChange = {
+                            rememberMe = it
+                            viewModel.toggleRememberMe(it)
+                        },
                         colors = CheckboxDefaults.colors(
                             checkedColor = Color(0xFF1E90FF),
                             uncheckedColor = Color(0xFF1E90FF)

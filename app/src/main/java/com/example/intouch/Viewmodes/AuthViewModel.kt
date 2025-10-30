@@ -7,9 +7,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.intouch.Network.AuthRequest
 import com.example.intouch.Network.RetrofitInstance
+import com.example.intouch.rememberme.UserPreferences
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class AuthViewModel : ViewModel() {
+class AuthViewModel(private val userPreferences: UserPreferences) : ViewModel() {
 
     var phoneNumber = mutableStateOf("")
     var otp = mutableStateOf("")
@@ -57,6 +60,19 @@ class AuthViewModel : ViewModel() {
                 errorMessage.value = "Network error: ${e.message}"
             }
             loading.value = false
+        }
+    }
+
+
+    val rememberMeState = userPreferences.rememberMe.stateIn(
+        viewModelScope,
+        SharingStarted.Eagerly,
+        false
+    )
+
+    fun toggleRememberMe(value: Boolean) {
+        viewModelScope.launch {
+            userPreferences.saveRememberMe(value)
         }
     }
 }

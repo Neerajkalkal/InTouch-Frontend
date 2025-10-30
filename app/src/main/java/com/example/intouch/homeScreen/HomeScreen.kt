@@ -1,5 +1,6 @@
 package com.example.intouch.homeScreen
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -7,10 +8,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 
@@ -33,24 +36,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.intouch.R
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.runtime.*
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import androidx.compose.material.icons.filled.Add
+import androidx.navigation.compose.rememberNavController
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(
-    navController: NavController
-) {
+fun HomeScreen(navController: NavController) {
     var selectedTab by remember { mutableStateOf("Chats") }
 
     Scaffold(
@@ -60,46 +58,45 @@ fun HomeScreen(
                 containerColor = Color(0xFF266EFF)
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.round_add_circle_24), // use any chat icon
+                    imageVector = Icons.Filled.Add,
                     contentDescription = "New Chat",
                     tint = Color.White
                 )
             }
         },
         containerColor = Color(0xFF111016)
-    ) { innerPadding ->
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
         ) {
-            // Top Bar
             TopAppBar(
                 title = {
                     Text(
                         "InTouch",
                         color = Color.White,
-                        fontSize = 22.sp,
+                        fontSize = 28.sp,
                         fontWeight = FontWeight.Bold
                     )
                 },
                 actions = {
-                    IconButton(onClick = { /* search */ }) {
-                        Icon(Icons.Default.Search, contentDescription = "Search", tint = Color.White)
-                    }
-                    IconButton(onClick = { /* menu */ }) {
-                        Icon(Icons.Default.MoreVert, contentDescription = "Menu", tint = Color.White)
-                    }
-                },
+                        IconButton(onClick = { /* search */ }) {
+                            NeonIconButtons()
+                        }
+
+                        IconButton(onClick = { /* menu */ }) {
+                            NeonIconButton()
+                        }
+                    },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color(0xFF111016)
                 )
             )
 
-            // Tabs
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(horizontal = 10.dp)
                     .padding(vertical = 8.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
@@ -116,8 +113,9 @@ fun HomeScreen(
                         if (selectedTab == tab) {
                             Box(
                                 modifier = Modifier
-                                    .padding(top = 2.dp)
-                                    .height(2.dp)
+                                    .fillMaxSize()
+                                    .padding(top = 1.dp)
+                                    .height(10.dp)
                                     .width(40.dp)
                                     .background(Color(0xFF266EFF))
                             )
@@ -128,21 +126,21 @@ fun HomeScreen(
 
             Spacer(modifier = Modifier.height(50.dp))
 
-            // Empty Chat State
             Column(
                 modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
                 Text(
                     text = "You haven’t chat yet",
                     color = Color(0xFF8E8E8E),
-                    fontSize = 16.sp
+                    fontSize = 22.sp
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(
                     onClick = { /* start new chat */ },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF266EFF)),
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(18.dp)
                 ) {
                     Text("Start Chatting", color = Color.White)
                 }
@@ -150,3 +148,12 @@ fun HomeScreen(
         }
     }
 }
+
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun HomeScreenPreview() {
+    val navController = rememberNavController()
+    HomeScreen(navController = navController)
+}
+
