@@ -1,4 +1,4 @@
-package com.example.intouch.loginScreen
+package com.example.intouch.Uii.loginScreen
 
 
 import androidx.compose.foundation.Image

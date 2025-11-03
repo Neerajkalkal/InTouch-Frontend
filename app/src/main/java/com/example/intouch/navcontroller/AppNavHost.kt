@@ -5,9 +5,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import androidx.navigation.navArgument
-import com.example.intouch.homeScreen.HomeScreen
-import com.example.intouch.loginScreen.LoginScreen
-import com.example.intouch.loginScreen.OtpVerificationScreen
+import com.example.intouch.Uii.homeScreen.HomeScreen
+import com.example.intouch.Uii.loginScreen.LoginScreen
+import com.example.intouch.Uii.loginScreen.OtpVerificationScreen
 
 @Composable
 fun AppNavHost() {

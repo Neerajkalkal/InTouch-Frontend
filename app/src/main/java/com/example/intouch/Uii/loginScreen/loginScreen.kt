@@ -1,4 +1,4 @@
-package com.example.intouch.loginScreen
+package com.example.intouch.Uii.loginScreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -28,16 +28,18 @@ fun LoginScreen(
     val rememberMeState = viewModel.rememberMeState.collectAsState()
     var rememberMe by remember { mutableStateOf(rememberMeState.value) }
 
+    val authViewModel: AuthViewModel = viewModel()
+
+    // Example: auto navigate if rememberMe is true
+//    val rememberMe by authViewModel.rememberMeState.collectAsState()
 
     LaunchedEffect(rememberMe) {
-        // 👇 If user chose remember me, skip login screen
         if (rememberMe) {
             navController.navigate("home") {
                 popUpTo("login") { inclusive = true }
             }
         }
     }
-
     // Background
     Box(
         modifier = Modifier

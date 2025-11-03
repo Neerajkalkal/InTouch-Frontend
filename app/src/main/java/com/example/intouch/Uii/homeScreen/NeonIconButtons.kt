@@ -1,4 +1,4 @@
-package com.example.intouch.homeScreen
+package com.example.intouch.Uii.homeScreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
