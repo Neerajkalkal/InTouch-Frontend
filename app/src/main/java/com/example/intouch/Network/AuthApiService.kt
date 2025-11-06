@@ -1,10 +1,13 @@
 package com.example.intouch.Network
 
 
+import com.example.intouch.data.model.ChatMessage
+import com.google.android.gms.common.api.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 data class AuthRequest(
     val mobileNumber: String,
@@ -32,4 +35,11 @@ interface AuthApiService {
 
     @GET("api/auth/user")
     suspend fun getUserProfile(@Header("Authorization") token: String): Any
+
+//    @POST("/api/chat/send")
+//    suspend fun sendMessage(
+//        @Query("chatId") chatId: String,
+//        @Body message: ChatMessage
+//    ): Response<String>
+
 }

@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.MaterialTheme
 import com.example.intouch.Uii.Screens.ChatListScreen
+import com.example.intouch.Uii.Screens.ChatScreen
 import com.example.intouch.navcontroller.AppNavHost
 import com.example.intouch.ui.theme.InTouchTheme
 
@@ -16,9 +17,13 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialTheme {
 //                AppNavHost() // ✅ call the composable
-                ChatListScreen(onChatClick = { chat ->
-                    println("Clicked on chat: ${chat.name}")
-                })
+//                ChatListScreen(onChatClick = { chat ->
+//                    println("Clicked on chat: ${chat.name}")
+//                })
+                ChatScreen(
+                    name = "Kathryn Murphy",
+                    onBack = { finish() } // closes activity on back
+                )
             }
         }
     }

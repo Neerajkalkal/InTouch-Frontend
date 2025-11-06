@@ -32,17 +32,8 @@ import androidx.compose.material.icons.filled.Archive
 import com.example.intouch.R
 import com.example.intouch.Uii.homeScreen.NeonIconButton
 import com.example.intouch.Uii.homeScreen.NeonIconButtons
+import com.example.intouch.data.model.ChatItem
 
-
-data class ChatItem(
-    val name: String,
-    val lastMessage: String,
-    val time: String,
-    val unreadCount: Int = 0,
-    val imageUrl: String? = null,
-    val isGroup: Boolean = false,
-    val isPinned: Boolean = false
-)
 
 @Composable
 fun ChatListScreen(
